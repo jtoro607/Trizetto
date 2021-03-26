@@ -1,0 +1,11 @@
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\Trizetto.deps.json
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\Trizetto.dll
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\netstandard2.0\Trizetto.csprojAssemblyReference.cache
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\netstandard2.0\Trizetto.csproj.CoreCompileInputs.cache
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\netstandard2.0\Trizetto.AssemblyInfoInputs.cache
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\netstandard2.0\Trizetto.AssemblyInfo.cs
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\TechTalk.SpecFlow.xUnit.SpecFlowPlugin.dll
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\xunit.runner.visualstudio.testadapter.dll
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\xunit.runner.reporters.net452.dll
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\xunit.runner.utility.net452.dll
+C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\netstandard2.0\xunit.abstractions.dll
