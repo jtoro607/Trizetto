@@ -84,8 +84,8 @@ namespace Trizetto.TestCases
         [Xunit.TraitAttribute("FeatureTitle", "CreateUser")]
         [Xunit.TraitAttribute("Description", "CreateUser")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        [Xunit.InlineDataAttribute("Jon", "Due", "jdue1@myemail.com", "password1", new string[0])]
-        public virtual void CreateUser(string fisrsName, string lastName, string email, string password, string[] exampleTags)
+        [Xunit.InlineDataAttribute("Jon", "Due", "jdue2@myemail.com", "password1", "1 main st", "Orlando", "Florida", "32822", "United States", "4073214567", "TestCustomer", new string[0])]
+        public virtual void CreateUser(string fisrsName, string lastName, string email, string password, string address, string city, string state, string zipcode, string country, string mobile, string alias, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "mytag"};
@@ -99,6 +99,13 @@ namespace Trizetto.TestCases
             argumentsOfScenario.Add("Last Name", lastName);
             argumentsOfScenario.Add("Email", email);
             argumentsOfScenario.Add("Password", password);
+            argumentsOfScenario.Add("Address", address);
+            argumentsOfScenario.Add("City", city);
+            argumentsOfScenario.Add("State", state);
+            argumentsOfScenario.Add("Zipcode", zipcode);
+            argumentsOfScenario.Add("Country", country);
+            argumentsOfScenario.Add("Mobile", mobile);
+            argumentsOfScenario.Add("Alias", alias);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CreateUser", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
@@ -127,13 +134,23 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I click on Sign In button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 8
- testRunner.When("I enter email address <\'Email\'> in Create Account section", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("I enter email address {0} in Create Account section", email), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
  testRunner.And("I click on Create an Account button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
- testRunner.Then("I enter <\'Fisrs Name\'> <\'Last Name\'> <\'Email\'> <\'Password\'>", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("I enter {0} {1} {2} {3}", fisrsName, lastName, email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+ testRunner.And(string.Format("I also enter on Address section \'{0}\', \'{1}\', \'{2}\', \'{3}\', \'{4}\', {5}, and \'{6}\'" +
+                            "", address, city, state, zipcode, country, mobile, alias), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 12
+ testRunner.And("I click on Register button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+ testRunner.And("Assert the logged use in the same first/last name that you entered", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
