@@ -1,11 +1,14 @@
 ﻿Feature: CreateUser
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+
 
 @mytag
-Scenario: Add two numbers
-	Given the first number is 50
-	And the second number is 70
-	When the two numbers are added
-	Then the result should be 120
+Scenario Outline: CreateUser
+	Given I am on web page 'http://automationpractice.com/index.php'
+	And I click on Sign In button
+	When I enter email address <'Email'> in Create Account section
+	And I click on Create an Account button
+	Then I enter <'Fisrs Name'> <'Last Name'> <'Email'> <'Password'>
+
+	Examples: 
+	| Fisrs Name | Last Name | Email             | Password  |
+	| Jon        | Due       | jdue1@myemail.com | password1 |
