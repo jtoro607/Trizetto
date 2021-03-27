@@ -84,7 +84,7 @@ namespace Trizetto.TestCases
         [Xunit.TraitAttribute("FeatureTitle", "CreateUser")]
         [Xunit.TraitAttribute("Description", "CreateUser")]
         [Xunit.TraitAttribute("Category", "mytag")]
-        [Xunit.InlineDataAttribute("Jon", "Due", "jdue2@myemail.com", "password1", "1 main st", "Orlando", "Florida", "32822", "United States", "4073214567", "TestCustomer", new string[0])]
+        [Xunit.InlineDataAttribute("Jon", "Due", "someguy1@myemail.com", "password1", "1 main st", "Orlando", "Florida", "32822", "United States", "4073214567", "TestCustomer", new string[0])]
         public virtual void CreateUser(string fisrsName, string lastName, string email, string password, string address, string city, string state, string zipcode, string country, string mobile, string alias, string[] exampleTags)
         {
             string[] @__tags = new string[] {

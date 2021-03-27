@@ -14,4 +14,4 @@ Scenario Outline: CreateUser
 
 	Examples: 
 	| Fisrs Name | Last Name | Email             | Password  | Address   | City    | State   | Zipcode | Country           | Mobile       | Alias        |
-	| Jon        | Due       | jdue2@myemail.com | password1 | 1 main st | Orlando | Florida | 32822   | United States     | 4073214567   | TestCustomer |
+	| Jon        | Due       | someguy1@myemail.com | password1 | 1 main st | Orlando | Florida | 32822   | United States     | 4073214567   | TestCustomer |

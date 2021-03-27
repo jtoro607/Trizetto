@@ -15,10 +15,13 @@ namespace Trizetto.TestCases
     [Scope(Feature = "CreateUser")]
     public class CreateUserSteps 
     {
+        #region
         private IWebDriver _driver;
         private string _firstName;
         private string _lastName;
         private string _email;
+        private readonly HomePagePOM _homePagePOM;
+        #endregion
 
         public CreateUserSteps()
         {
@@ -36,7 +39,7 @@ namespace Trizetto.TestCases
         [Given(@"I click on Sign In button")]
         public void GivenIClickOnSignInButton()
         {
-            _driver.FindElement(By.ClassName("login")).Click();
+            _homePagePOM.Signin.Click();
         }
 
         [When(@"I enter email address (.*) in Create Account section")]
@@ -75,7 +78,12 @@ namespace Trizetto.TestCases
         [Then(@"I also enter on Address section '(.*)', '(.*)', '(.*)', '(.*)', '(.*)', (.*), and '(.*)'")]
         public void ThenIAlsoEnterOnAddressSectionAnd(string address, string city, string state, string zipcode, string country, string mobile, string alias)
         {
-            var test = _driver.FindElement(By.Id("city")).Location.Y;
+
+            var element = _driver.FindElement(By.Id("firstname"));
+            var testx = element.Location.X;
+            var testy = element.Location.Y;
+
+            ScrollToElement(_driver, element);
             var validateFirstName = _driver.FindElement(By.Id("firstname")).GetAttribute("value");
             if (!validateFirstName.Contains(_firstName))
             {
@@ -123,9 +131,6 @@ namespace Trizetto.TestCases
             }
         }
 
-
-
-
         private IWebDriver GetChromDriver()
         {
             var options = new ChromeOptions();
@@ -140,5 +145,10 @@ namespace Trizetto.TestCases
             _driver.Quit();
         }
 
+        private void ScrollToElement(IWebDriver driver, IWebElement element)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript(String.Format("window.scrollTo({0}, {1})", element.Location.X, element.Location.Y));
+        }
     }
 }
