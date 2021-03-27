@@ -24,7 +24,6 @@ C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\net48\xunit.assert.dll
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\net48\xunit.core.dll
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\net48\xunit.execution.desktop.dll
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\bin\Debug\net48\Xunit.SkippableFact.dll
-C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\net48\Trizetto.csprojAssemblyReference.cache
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\net48\Trizetto.dll.config
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\net48\Trizetto.csproj.CoreCompileInputs.cache
 C:\Users\jt\Documents\GitHub\Trizetto\Trizetto\obj\Debug\net48\Trizetto.AssemblyInfoInputs.cache

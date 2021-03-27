@@ -1,10 +1,8 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using TechTalk.SpecFlow;
+using Trizetto.DriverFactory;
 using Xunit;
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
@@ -15,24 +13,27 @@ namespace Trizetto.TestCases
     [Scope(Feature = "CreateUser")]
     public class CreateUserSteps 
     {
-        #region
+        #region Declarations
         private IWebDriver _driver;
         private string _firstName;
         private string _lastName;
         private string _email;
         private readonly HomePagePOM _homePagePOM;
+        private readonly CreateAccountPOM _createAccountPOM;
+        private readonly Drivers _driverFactory;
         #endregion
 
         public CreateUserSteps()
         {
-
+            _driverFactory = new Drivers();
+            _driver = _driverFactory.GetChromDriver();
+            _homePagePOM = new HomePagePOM(_driver);
+            _createAccountPOM = new CreateAccountPOM(_driver);
         }
-
 
         [Given(@"I am on web page '(.*)'")]
         public void GivenIAmOnWebPage(string webLink)
         {
-            _driver = GetChromDriver();
             _driver.Navigate().GoToUrl(webLink);
         }
 
@@ -45,13 +46,13 @@ namespace Trizetto.TestCases
         [When(@"I enter email address (.*) in Create Account section")]
         public void WhenIEnterEmailAddressInCreateAccountSection(string email)
         {
-            _driver.FindElement(By.Id("email_create")).SendKeys(email);
+            _createAccountPOM.EmailAddress.SendKeys(email);
         }
 
         [When(@"I click on Create an Account button")]
         public void WhenIClickOnCreateAnAccountButton()
         {
-            _driver.FindElement(By.Name("SubmitCreate")).Click();
+            _createAccountPOM.CreateAccountButton.Click();
         }
 
         [Then(@"I enter (.*) (.*) (.*) (.*)")]
@@ -62,93 +63,65 @@ namespace Trizetto.TestCases
             _email = email;
 
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("customer_firstname")));
+            wait.Until(ExpectedConditions.ElementToBeClickable(_createAccountPOM.CustomerFirstNameLocator));
 
-            _driver.FindElement(By.Id("customer_firstname")).SendKeys(firstName);
-            _driver.FindElement(By.Id("customer_lastname")).SendKeys(lastName);
+            _createAccountPOM.CustomerFirstName.SendKeys(firstName);
+            _createAccountPOM.CustomerLastName.SendKeys(lastName);
 
-            var validateEmail = _driver.FindElement(By.Id("email")).GetAttribute("value");
-            if (!validateEmail.Contains(email))
-            {
-                Assert.True(false, $"Email field does not autopopulate email value: {email}");
-            }
-            _driver.FindElement(By.Id("passwd")).SendKeys(password);
+            var validateEmail = _createAccountPOM.Email.GetAttribute("value");
+            if (!validateEmail.Contains(email)) Assert.True(false, $"Email field does not autopopulate email value: {email}");
+            
+            _createAccountPOM.Password.SendKeys(password);
         }
 
         [Then(@"I also enter on Address section '(.*)', '(.*)', '(.*)', '(.*)', '(.*)', (.*), and '(.*)'")]
         public void ThenIAlsoEnterOnAddressSectionAnd(string address, string city, string state, string zipcode, string country, string mobile, string alias)
         {
+            _homePagePOM.ScrollToElement(_driver, _createAccountPOM.FirstName);
+            var validateFirstName = _createAccountPOM.FirstName.GetAttribute("value");
 
-            var element = _driver.FindElement(By.Id("firstname"));
-            var testx = element.Location.X;
-            var testy = element.Location.Y;
-
-            ScrollToElement(_driver, element);
-            var validateFirstName = _driver.FindElement(By.Id("firstname")).GetAttribute("value");
             if (!validateFirstName.Contains(_firstName))
             {
                 Assert.True(false, "Email field does not autopopulate First Name value");
             }
 
-            var validateLastName = _driver.FindElement(By.Id("lastname")).GetAttribute("value");
-            if (!validateLastName.Contains(_lastName))
-            {
+            if (!_createAccountPOM.LastName.GetAttribute("value").Contains(_lastName))
                 Assert.True(false, "Email field does not autopopulate Last name value");
-            }
 
-            _driver.FindElement(By.Id("address1")).SendKeys(address);
-            _driver.FindElement(By.Id("city")).SendKeys(city);
-
-            SelectElement selectState = new SelectElement(_driver.FindElement(By.Id("id_state")));
-            selectState.SelectByText(state);
-
-            _driver.FindElement(By.Id("postcode")).SendKeys(zipcode);
-
-            SelectElement se = new SelectElement(_driver.FindElement(By.Id("id_country")));
-            se.SelectByText(country);
-
-            _driver.FindElement(By.Id("phone_mobile")).SendKeys(mobile);
-
-            _driver.FindElement(By.Id("alias")).Clear();
-            _driver.FindElement(By.Id("alias")).SendKeys(alias);
+            _createAccountPOM.Address.SendKeys(address);
+            _createAccountPOM.City.SendKeys(city);
+            _createAccountPOM.State.SelectByText(state);
+            _createAccountPOM.Zipcode.SendKeys(zipcode);
+            _createAccountPOM.Country.SelectByText(country);
+            _createAccountPOM.MobilePhone.SendKeys(mobile);
+            _createAccountPOM.Alias.Clear();
+            _createAccountPOM.Alias.SendKeys(alias);
         }
 
         [Then(@"I click on Register button")]
         public void ThenIClickOnRegisterButton()
         {
-            _driver.FindElement(By.Id("submitAccount")).Click();
+            _createAccountPOM.RegisterButton.Click();
         }
 
         [Then(@"Assert the logged use in the same first/last name that you entered")]
         public void ThenAssertTheLoggedUseInTheSameFirstLastNameThatYouEntered()
         {
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.ClassName("account")));
-            var user = _driver.FindElement(By.ClassName("account")).Text;
+            wait.Until(ExpectedConditions.ElementToBeClickable(_homePagePOM.AccountInfoLocator));
+
+            var user = _homePagePOM.AccountInfo.Text;
             if (!user.Contains(_firstName) || !user.Contains(_lastName))
             {
                 Assert.True(false, $"User name {_firstName} {_lastName} is not displayed after login");
             }
         }
 
-        private IWebDriver GetChromDriver()
-        {
-            var options = new ChromeOptions();
-            options.AddArgument("--start-Maximized");
-            return new ChromeDriver(options);
-        }
-
         [AfterScenario]
         private void QuitDriver()
         {
-            _driver.Close();
-            _driver.Quit();
+            _driverFactory.QuitDriver();
         }
 
-        private void ScrollToElement(IWebDriver driver, IWebElement element)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-            js.ExecuteScript(String.Format("window.scrollTo({0}, {1})", element.Location.X, element.Location.Y));
-        }
     }
 }
